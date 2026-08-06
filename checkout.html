@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | Luna Accessories</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            luxury: {
+              beige: "#F5F5DC",
+              gold: "#D4AF37",
+              black: "#121212",
+              white: "#FFFFFF",
+              gray: "#E5E7EB",
+              darkGray: "#374151"
+            }
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            serif: ["Playfair Display", "serif"],
+          },
+          boxShadow: {
+            "luxury": "0 4px 20px rgba(0, 0, 0, 0.05)",
+          }
+        }
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer base {
+      body { @apply font-sans bg-luxury-white text-luxury-black transition-colors duration-300; }
+      .dark body { @apply bg-luxury-black text-luxury-white; }
+    }
+    @layer components {
+      .btn-primary { @apply bg-luxury-black text-luxury-white px-6 py-3 rounded hover:bg-luxury-darkGray transition-colors; }
+      .dark .btn-primary { @apply bg-luxury-white text-luxury-black hover:bg-luxury-gray; }
+      .btn-outline { @apply border border-luxury-black text-luxury-black px-6 py-3 rounded hover:bg-luxury-black hover:text-luxury-white transition-colors; }
+      .dark .btn-outline { @apply border-luxury-white text-luxury-white hover:bg-luxury-white hover:text-luxury-black; }
+      .card { @apply bg-luxury-white rounded-xl shadow-luxury overflow-hidden transition-transform hover:-translate-y-1; }
+      .dark .card { @apply bg-luxury-darkGray shadow-none; }
+    }
+  </style>
+  <link rel="stylesheet" href="./src/style.css">
+</head>
+<body class="font-sans antialiased text-luxury-black bg-luxury-white dark:bg-luxury-black dark:text-luxury-white transition-colors duration-300 flex flex-col min-h-screen">
+  
+  <div id="app-header"></div>
+
+  <main class="flex-grow pt-32 px-4 max-w-7xl mx-auto w-full pb-24">
+    <h1 class="font-serif text-4xl font-bold mb-10 text-center">Your Cart</h1>
+    
+    <div class="flex flex-col lg:flex-row gap-12">
+      <!-- Cart Items -->
+      <div class="lg:w-2/3">
+        <div id="cart-items" class="space-y-6">
+          <!-- JS will populate -->
+        </div>
+      </div>
+      
+      <!-- Order Summary -->
+      <div class="lg:w-1/3">
+        <div class="bg-luxury-beige/30 dark:bg-luxury-darkGray/20 p-8 rounded-xl sticky top-32">
+          <h2 class="font-bold text-xl mb-6 uppercase tracking-wider border-b border-luxury-gray/30 pb-4">Order Summary</h2>
+          
+          <div class="space-y-4 mb-6 text-luxury-gray dark:text-luxury-gray">
+            <div class="flex justify-between">
+              <span>Subtotal</span>
+              <span id="subtotal" class="text-luxury-black dark:text-white font-medium">EGP 0.00</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Shipping</span>
+              <span class="text-luxury-black dark:text-white font-medium">Calculated at next step</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Tax</span>
+              <span class="text-luxury-black dark:text-white font-medium">Calculated at next step</span>
+            </div>
+          </div>
+          
+          <div class="border-t border-luxury-gray/30 pt-4 mb-8">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-lg">Total</span>
+              <span id="total" class="font-bold text-2xl">EGP 0.00</span>
+            </div>
+          </div>
+          
+          <div class="mb-6 relative">
+            <input type="text" placeholder="Promo Code" class="w-full p-4 pr-24 rounded border border-luxury-gray bg-white dark:bg-luxury-black focus:outline-none focus:border-luxury-gold">
+            <button class="absolute right-2 top-2 bottom-2 bg-luxury-black text-white dark:bg-white dark:text-luxury-black px-4 rounded text-sm font-semibold hover:bg-luxury-gold transition-colors">Apply</button>
+          </div>
+          
+          <button class="w-full btn-primary h-14 uppercase tracking-wider font-semibold">Proceed to Checkout</button>
+          
+          <div class="mt-6 flex justify-center space-x-4 grayscale opacity-60">
+            <!-- Payment Icons Mock -->
+            <svg class="w-10 h-6" viewBox="0 0 32 20" fill="currentColor"><rect width="32" height="20" rx="3" fill="#E5E7EB"/><path d="M22.5 14h-13v-2h13v2zm0-4h-13V8h13v2z" fill="#9CA3AF"/></svg>
+            <svg class="w-10 h-6" viewBox="0 0 32 20" fill="currentColor"><rect width="32" height="20" rx="3" fill="#E5E7EB"/><circle cx="12" cy="10" r="5" fill="#EF4444" opacity="0.8"/><circle cx="20" cy="10" r="5" fill="#F59E0B" opacity="0.8"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="app-footer"></div>
+
+  <script type="module" src="./src/main.js"></script>
+  <script>
+    
+    let products = [];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      setupSharedUI();
+      products = await fetchProducts();
+      renderCart();
+      
+      window.updateCartQty = (id, change) => {
+        const item = store.cart.find(i => i.id === id);
+        if (item) {
+          // addToCart logic in main.js handles += quantity, so we pass change directly
+          addToCart(id, change);
+          renderCart();
+        }
+      };
+
+      window.removeCartItem = (id) => {
+        removeFromCart(id);
+        renderCart();
+      };
+    });
+
+    function renderCart() {
+      const container = document.getElementById('cart-items');
+      const subtotalEl = document.getElementById('subtotal');
+      const totalEl = document.getElementById('total');
+      
+      if (store.cart.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-16 bg-luxury-beige/10 dark:bg-luxury-darkGray/10 rounded-xl border border-luxury-gray/20">
+            <svg class="w-16 h-16 mx-auto mb-4 text-luxury-gray" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+            <h2 class="text-2xl font-serif mb-4">Your cart is empty</h2>
+            <p class="text-luxury-gray mb-8">Looks like you haven't added anything yet.</p>
+            <a href="shop.html" class="btn-primary">Continue Shopping</a>
+          </div>
+        `;
+        subtotalEl.textContent = 'EGP 0.00';
+        totalEl.textContent = 'EGP 0.00';
+        return;
+      }
+      
+      let html = '';
+      let subtotal = 0;
+      
+      store.cart.forEach(item => {
+        const product = products.find(p => p.id === item.id);
+        if (product) {
+          subtotal += product.price * item.quantity;
+          html += `
+            <div class="flex gap-6 p-4 rounded-lg hover:bg-luxury-beige/10 dark:hover:bg-luxury-darkGray/10 transition-colors border-b border-luxury-gray/20 pb-6">
+              <a href="product.html?id=${product.id}" class="w-24 h-32 flex-shrink-0 rounded overflow-hidden">
+                <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
+              </a>
+              <div class="flex-grow flex flex-col justify-between">
+                <div class="flex justify-between">
+                  <div>
+                    <h3 class="font-serif font-bold text-lg"><a href="product.html?id=${product.id}">${product.name}</a></h3>
+                    <p class="text-luxury-gray text-sm">${product.category}</p>
+                  </div>
+                  <button onclick="window.removeCartItem('${product.id}')" class="text-luxury-gray hover:text-red-500 transition-colors h-fit">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                  </button>
+                </div>
+                <div class="flex justify-between items-end mt-4">
+                  <div class="flex items-center border border-luxury-gray rounded h-10 w-24">
+                    <button onclick="window.updateCartQty('${product.id}', -1)" ${item.quantity <= 1 ? 'disabled class="opacity-50"' : ''} class="w-1/3 h-full flex items-center justify-center hover:bg-luxury-beige dark:hover:bg-luxury-darkGray transition-colors">-</button>
+                    <span class="w-1/3 h-full flex items-center justify-center font-bold text-sm">${item.quantity}</span>
+                    <button onclick="window.updateCartQty('${product.id}', 1)" class="w-1/3 h-full flex items-center justify-center hover:bg-luxury-beige dark:hover:bg-luxury-darkGray transition-colors">+</button>
+                  </div>
+                  <p class="font-bold text-lg">EGP ${(product.price * item.quantity).toFixed(2)}</p>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+      });
+      
+      container.innerHTML = html;
+      subtotalEl.textContent = 'EGP ' + subtotal.toFixed(2);
+      totalEl.textContent = 'EGP ' + subtotal.toFixed(2);
+    }
+  </script>
+</body>
+</html>

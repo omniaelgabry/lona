@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop | Luna Accessories</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            luxury: {
+              beige: "#F5F5DC",
+              gold: "#D4AF37",
+              black: "#121212",
+              white: "#FFFFFF",
+              gray: "#E5E7EB",
+              darkGray: "#374151"
+            }
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            serif: ["Playfair Display", "serif"],
+          },
+          boxShadow: {
+            "luxury": "0 4px 20px rgba(0, 0, 0, 0.05)",
+          }
+        }
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer base {
+      body { @apply font-sans bg-luxury-white text-luxury-black transition-colors duration-300; }
+      .dark body { @apply bg-luxury-black text-luxury-white; }
+    }
+    @layer components {
+      .btn-primary { @apply bg-luxury-black text-luxury-white px-6 py-3 rounded hover:bg-luxury-darkGray transition-colors; }
+      .dark .btn-primary { @apply bg-luxury-white text-luxury-black hover:bg-luxury-gray; }
+      .btn-outline { @apply border border-luxury-black text-luxury-black px-6 py-3 rounded hover:bg-luxury-black hover:text-luxury-white transition-colors; }
+      .dark .btn-outline { @apply border-luxury-white text-luxury-white hover:bg-luxury-white hover:text-luxury-black; }
+      .card { @apply bg-luxury-white rounded-xl shadow-luxury overflow-hidden transition-transform hover:-translate-y-1; }
+      .dark .card { @apply bg-luxury-darkGray shadow-none; }
+    }
+  </style>
+  <link rel="stylesheet" href="./src/style.css">
+</head>
+<body class="font-sans antialiased text-luxury-black bg-luxury-white dark:bg-luxury-black dark:text-luxury-white transition-colors duration-300 flex flex-col min-h-screen">
+  
+  <div id="app-header"></div>
+
+  <main class="flex-grow pt-32 px-4 max-w-7xl mx-auto w-full">
+    <div class="text-center mb-12">
+      <h1 class="font-serif text-5xl font-bold mb-4">Our Collection</h1>
+      <div class="w-16 h-1 bg-luxury-gold mx-auto mb-6"></div>
+      <p class="text-luxury-gray max-w-2xl mx-auto">Explore our full range of exquisitely crafted accessories.</p>
+    </div>
+
+    <div class="flex flex-col md:flex-row gap-8 mb-12">
+      <!-- Filters Sidebar -->
+      <aside class="w-full md:w-64 flex-shrink-0">
+        <div class="sticky top-32">
+          <h3 class="font-bold text-lg mb-4 uppercase tracking-wider border-b border-luxury-gray/30 pb-2">Filters</h3>
+          
+          <div class="mb-6">
+            <h4 class="font-semibold mb-3">Category</h4>
+            <div class="space-y-2 text-luxury-gray">
+              <label class="flex items-center space-x-2 cursor-pointer hover:text-luxury-gold transition-colors">
+                <input type="radio" name="category" value="all" class="form-radio text-luxury-gold focus:ring-luxury-gold" checked>
+                <span>All Categories</span>
+              </label>
+              <label class="flex items-center space-x-2 cursor-pointer hover:text-luxury-gold transition-colors">
+                <input type="radio" name="category" value="Necklaces" class="form-radio text-luxury-gold focus:ring-luxury-gold">
+                <span>Necklaces</span>
+              </label>
+              <label class="flex items-center space-x-2 cursor-pointer hover:text-luxury-gold transition-colors">
+                <input type="radio" name="category" value="Earrings" class="form-radio text-luxury-gold focus:ring-luxury-gold">
+                <span>Earrings</span>
+              </label>
+              <label class="flex items-center space-x-2 cursor-pointer hover:text-luxury-gold transition-colors">
+                <input type="radio" name="category" value="Rings" class="form-radio text-luxury-gold focus:ring-luxury-gold">
+                <span>Rings</span>
+              </label>
+              <label class="flex items-center space-x-2 cursor-pointer hover:text-luxury-gold transition-colors">
+                <input type="radio" name="category" value="Bracelets" class="form-radio text-luxury-gold focus:ring-luxury-gold">
+                <span>Bracelets</span>
+              </label>
+              <label class="flex items-center space-x-2 cursor-pointer hover:text-luxury-gold transition-colors">
+                <input type="radio" name="category" value="Watches" class="form-radio text-luxury-gold focus:ring-luxury-gold">
+                <span>Watches</span>
+              </label>
+              <label class="flex items-center space-x-2 cursor-pointer hover:text-luxury-gold transition-colors">
+                <input type="radio" name="category" value="Handbags" class="form-radio text-luxury-gold focus:ring-luxury-gold">
+                <span>Handbags</span>
+              </label>
+            </div>
+          </div>
+          
+          <div>
+            <h4 class="font-semibold mb-3">Sort By</h4>
+            <select id="sort-select" class="w-full p-2 border border-luxury-gray rounded bg-transparent dark:border-luxury-darkGray dark:text-white focus:outline-none focus:border-luxury-gold">
+              <option value="featured">Featured</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="newest">Newest Arrivals</option>
+            </select>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Products Grid -->
+      <div class="flex-grow">
+        <div id="shop-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- JS will populate -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="app-footer"></div>
+
+  <script type="module" src="./src/main.js"></script>
+  <script>
+    
+    let allProducts = [];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      setupSharedUI();
+      allProducts = await fetchProducts();
+      renderShopGrid(allProducts);
+
+      // Filter Logic
+      const radios = document.querySelectorAll('input[name="category"]');
+      radios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+          applyFiltersAndSort();
+        });
+      });
+
+      // Sort Logic
+      document.getElementById('sort-select').addEventListener('change', (e) => {
+        applyFiltersAndSort();
+      });
+
+      window.addCartItem = (id) => addToCart(id, 1);
+      window.toggleWishlistItem = (id) => {
+        toggleWishlist(id);
+        applyFiltersAndSort(); // Re-render to update heart icon
+      };
+    });
+
+    function applyFiltersAndSort() {
+      const category = document.querySelector('input[name="category"]:checked').value;
+      const sort = document.getElementById('sort-select').value;
+      
+      let filtered = [...allProducts];
+      
+      if (category !== 'all') {
+        filtered = filtered.filter(p => p.category === category);
+      }
+      
+      if (sort === 'price-low') {
+        filtered.sort((a, b) => a.price - b.price);
+      } else if (sort === 'price-high') {
+        filtered.sort((a, b) => b.price - a.price);
+      } else if (sort === 'newest') {
+        filtered.sort((a, b) => (a.newArrival === b.newArrival) ? 0 : a.newArrival ? -1 : 1);
+      }
+      
+      renderShopGrid(filtered);
+    }
+
+    function renderShopGrid(products) {
+      const grid = document.getElementById('shop-grid');
+      grid.innerHTML = '';
+      
+      if (products.length === 0) {
+        grid.innerHTML = '<p class="text-luxury-gray col-span-full py-12 text-center">No products found matching your criteria.</p>';
+        return;
+      }
+
+      products.forEach(product => {
+        const isWishlisted = store.wishlist.includes(product.id);
+        const card = document.createElement('div');
+        card.className = 'card group relative flex flex-col h-full';
+        card.innerHTML = `
+          <div class="relative h-80 overflow-hidden">
+            <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            ${product.newArrival ? '<span class="absolute top-4 left-4 bg-white text-luxury-black text-xs font-bold px-3 py-1 uppercase tracking-wider">New</span>' : ''}
+            <button onclick="window.toggleWishlistItem('${product.id}')" class="absolute top-4 right-4 w-10 h-10 bg-white/80 dark:bg-black/50 rounded-full flex items-center justify-center hover:bg-luxury-gold hover:text-white transition-colors ${isWishlisted ? 'text-red-500' : 'text-luxury-black dark:text-white'}">
+              <svg class="w-5 h-5 ${isWishlisted ? 'fill-current' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+            </button>
+            <div class="absolute inset-x-0 bottom-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+              <button onclick="window.addCartItem('${product.id}')" class="w-full bg-luxury-black text-white dark:bg-luxury-white dark:text-luxury-black py-3 font-semibold uppercase tracking-wider text-sm hover:bg-luxury-gold dark:hover:bg-luxury-gold dark:hover:text-white transition-colors cursor-pointer relative z-20">Add to Cart</button>
+            </div>
+            <!-- Clickable overlay to product page -->
+            <a href="product.html?id=${product.id}" class="absolute inset-0 z-0"></a>
+          </div>
+          <div class="p-6 flex-grow flex flex-col justify-between">
+            <div>
+              <p class="text-luxury-gray text-sm mb-1 uppercase tracking-widest">${product.category}</p>
+              <h3 class="font-serif text-lg font-bold mb-2 group-hover:text-luxury-gold transition-colors"><a href="product.html?id=${product.id}">${product.name}</a></h3>
+            </div>
+            <div class="flex justify-between items-center mt-4">
+              <p class="font-bold text-lg">EGP ${product.price.toFixed(2)}</p>
+              <div class="flex items-center text-luxury-gold">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <span class="ml-1 text-sm text-luxury-gray">${product.rating}</span>
+              </div>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+  </script>
+</body>
+</html>

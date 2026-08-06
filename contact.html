@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | Luna Accessories</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            luxury: {
+              beige: "#F5F5DC",
+              gold: "#D4AF37",
+              black: "#121212",
+              white: "#FFFFFF",
+              gray: "#E5E7EB",
+              darkGray: "#374151"
+            }
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            serif: ["Playfair Display", "serif"],
+          },
+          boxShadow: {
+            "luxury": "0 4px 20px rgba(0, 0, 0, 0.05)",
+          }
+        }
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer base {
+      body { @apply font-sans bg-luxury-white text-luxury-black transition-colors duration-300; }
+      .dark body { @apply bg-luxury-black text-luxury-white; }
+    }
+    @layer components {
+      .btn-primary { @apply bg-luxury-black text-luxury-white px-6 py-3 rounded hover:bg-luxury-darkGray transition-colors; }
+      .dark .btn-primary { @apply bg-luxury-white text-luxury-black hover:bg-luxury-gray; }
+      .btn-outline { @apply border border-luxury-black text-luxury-black px-6 py-3 rounded hover:bg-luxury-black hover:text-luxury-white transition-colors; }
+      .dark .btn-outline { @apply border-luxury-white text-luxury-white hover:bg-luxury-white hover:text-luxury-black; }
+      .card { @apply bg-luxury-white rounded-xl shadow-luxury overflow-hidden transition-transform hover:-translate-y-1; }
+      .dark .card { @apply bg-luxury-darkGray shadow-none; }
+    }
+  </style>
+  <link rel="stylesheet" href="./src/style.css">
+</head>
+<body class="font-sans antialiased text-luxury-black bg-luxury-white dark:bg-luxury-black dark:text-luxury-white transition-colors duration-300 flex flex-col min-h-screen">
+  
+  <div id="app-header"></div>
+
+  <main class="flex-grow pt-32 px-4 max-w-7xl mx-auto w-full pb-24">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+      
+      <!-- Contact Info -->
+      <div>
+        <h1 class="font-serif text-5xl font-bold mb-6">Get in Touch</h1>
+        <div class="w-16 h-1 bg-luxury-gold mb-8"></div>
+        <p class="text-luxury-gray text-lg mb-10 leading-relaxed">We'd love to hear from you. Whether you have a question about our collections, need styling advice, or assistance with an order, our dedicated team is here to help.</p>
+        
+        <div class="space-y-8">
+          <div class="flex items-start space-x-4">
+            <div class="w-12 h-12 bg-luxury-beige dark:bg-luxury-darkGray rounded-full flex items-center justify-center text-luxury-gold flex-shrink-0">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            </div>
+            <div>
+              <h4 class="font-bold text-lg mb-1">Our Boutique</h4>
+              <p class="text-luxury-gray">123 Luxury Avenue<br>Fashion District<br>New York, NY 10001</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start space-x-4">
+            <div class="w-12 h-12 bg-luxury-beige dark:bg-luxury-darkGray rounded-full flex items-center justify-center text-luxury-gold flex-shrink-0">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+            </div>
+            <div>
+              <h4 class="font-bold text-lg mb-1">Email Us</h4>
+              <p class="text-luxury-gray">contact@luna-accessories.com<br>support@luna-accessories.com</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start space-x-4">
+            <div class="w-12 h-12 bg-luxury-beige dark:bg-luxury-darkGray rounded-full flex items-center justify-center text-luxury-gold flex-shrink-0">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+            </div>
+            <div>
+              <h4 class="font-bold text-lg mb-1">Call Us</h4>
+              <p class="text-luxury-gray">01028678244<br>Mon-Fri, 9am - 6pm EST</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Contact Form -->
+      <div class="bg-luxury-white dark:bg-luxury-darkGray p-8 md:p-12 rounded-xl shadow-luxury border border-luxury-gray/10">
+        <h3 class="font-serif text-2xl font-bold mb-6">Send an Inquiry</h3>
+        <form class="space-y-6">
+          <div>
+            <label class="block text-sm font-medium mb-2 uppercase tracking-wide">Full Name</label>
+            <input type="text" class="w-full p-4 border border-luxury-gray bg-transparent rounded focus:outline-none focus:border-luxury-gold transition-colors" placeholder="Jane Doe">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2 uppercase tracking-wide">Email Address</label>
+            <input type="email" class="w-full p-4 border border-luxury-gray bg-transparent rounded focus:outline-none focus:border-luxury-gold transition-colors" placeholder="jane@example.com">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2 uppercase tracking-wide">Subject</label>
+            <select class="w-full p-4 border border-luxury-gray bg-transparent rounded focus:outline-none focus:border-luxury-gold transition-colors text-luxury-black dark:text-white">
+              <option>General Inquiry</option>
+              <option>Order Status</option>
+              <option>Returns & Exchanges</option>
+              <option>Styling Advice</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2 uppercase tracking-wide">Message</label>
+            <textarea rows="5" class="w-full p-4 border border-luxury-gray bg-transparent rounded focus:outline-none focus:border-luxury-gold transition-colors" placeholder="How can we help you?"></textarea>
+          </div>
+          <button type="button" onclick="alert('Message sent successfully!')" class="w-full btn-primary h-14 uppercase tracking-wider font-semibold">Send Message</button>
+        </form>
+      </div>
+
+    </div>
+  </main>
+
+  <div id="app-footer"></div>
+
+  <script type="module" src="./src/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', setupSharedUI);
+  </script>
+</body>
+</html>

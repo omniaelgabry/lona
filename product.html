@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product | Luna Accessories</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            luxury: {
+              beige: "#F5F5DC",
+              gold: "#D4AF37",
+              black: "#121212",
+              white: "#FFFFFF",
+              gray: "#E5E7EB",
+              darkGray: "#374151"
+            }
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            serif: ["Playfair Display", "serif"],
+          },
+          boxShadow: {
+            "luxury": "0 4px 20px rgba(0, 0, 0, 0.05)",
+          }
+        }
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer base {
+      body { @apply font-sans bg-luxury-white text-luxury-black transition-colors duration-300; }
+      .dark body { @apply bg-luxury-black text-luxury-white; }
+    }
+    @layer components {
+      .btn-primary { @apply bg-luxury-black text-luxury-white px-6 py-3 rounded hover:bg-luxury-darkGray transition-colors; }
+      .dark .btn-primary { @apply bg-luxury-white text-luxury-black hover:bg-luxury-gray; }
+      .btn-outline { @apply border border-luxury-black text-luxury-black px-6 py-3 rounded hover:bg-luxury-black hover:text-luxury-white transition-colors; }
+      .dark .btn-outline { @apply border-luxury-white text-luxury-white hover:bg-luxury-white hover:text-luxury-black; }
+      .card { @apply bg-luxury-white rounded-xl shadow-luxury overflow-hidden transition-transform hover:-translate-y-1; }
+      .dark .card { @apply bg-luxury-darkGray shadow-none; }
+    }
+  </style>
+  <link rel="stylesheet" href="./src/style.css">
+</head>
+<body class="font-sans antialiased text-luxury-black bg-luxury-white dark:bg-luxury-black dark:text-luxury-white transition-colors duration-300 flex flex-col min-h-screen">
+  
+  <div id="app-header"></div>
+
+  <main class="flex-grow pt-32 px-4 max-w-7xl mx-auto w-full pb-24">
+    <div id="product-container" class="grid grid-cols-1 md:grid-cols-2 gap-16">
+      <!-- Loading state -->
+      <div class="col-span-2 text-center py-20 text-luxury-gray">
+        <p>Loading product details...</p>
+      </div>
+    </div>
+  </main>
+
+  <div id="app-footer"></div>
+
+  <script type="module" src="./src/main.js"></script>
+  <script>
+    
+    document.addEventListener('DOMContentLoaded', async () => {
+      setupSharedUI();
+      
+      const params = new URLSearchParams(window.location.search);
+      const productId = params.get('id');
+      
+      const products = await fetchProducts();
+      const product = products.find(p => p.id === productId);
+      
+      const container = document.getElementById('product-container');
+      
+      if (!product) {
+        container.innerHTML = '<div class="col-span-2 text-center py-20"><h2 class="text-2xl font-serif mb-4">Product Not Found</h2><a href="shop.html" class="btn-primary">Return to Shop</a></div>';
+        return;
+      }
+      
+      const isWishlisted = store.wishlist.includes(product.id);
+      
+      container.innerHTML = `
+        <!-- Image Gallery -->
+        <div class="space-y-4">
+          <div class="relative h-[600px] rounded-xl overflow-hidden bg-luxury-beige dark:bg-luxury-darkGray">
+            <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
+            <button onclick="window.toggleWishlistItem('${product.id}')" id="wishlist-btn" class="absolute top-6 right-6 w-12 h-12 bg-white/90 dark:bg-black/90 rounded-full flex items-center justify-center hover:bg-luxury-gold hover:text-white transition-colors shadow-lg ${isWishlisted ? 'text-red-500' : 'text-luxury-black dark:text-white'}">
+              <svg class="w-6 h-6 ${isWishlisted ? 'fill-current' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+            </button>
+          </div>
+          <div class="grid grid-cols-4 gap-4">
+            <div class="h-24 rounded-lg overflow-hidden border-2 border-luxury-gold cursor-pointer">
+               <img src="${product.image}" alt="Thumbnail" class="w-full h-full object-cover">
+            </div>
+            <!-- Placeholders for more images -->
+            <div class="h-24 rounded-lg overflow-hidden border border-luxury-gray cursor-pointer opacity-70 hover:opacity-100">
+               <img src="${product.image}" alt="Thumbnail" class="w-full h-full object-cover filter grayscale">
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="flex flex-col justify-center">
+          <p class="text-luxury-gray uppercase tracking-widest text-sm mb-4">${product.category}</p>
+          <h1 class="font-serif text-4xl md:text-5xl font-bold mb-4">${product.name}</h1>
+          
+          <div class="flex items-center space-x-4 mb-6">
+            <p class="text-2xl font-bold">EGP ${product.price.toFixed(2)}</p>
+            <div class="flex items-center text-luxury-gold">
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <span class="ml-2 text-luxury-gray">${product.rating} (128 Reviews)</span>
+            </div>
+          </div>
+
+          <p class="text-luxury-gray dark:text-luxury-gray leading-relaxed mb-8">${product.description} Handcrafted with precision and designed to make a statement.</p>
+          
+          <!-- Options -->
+          <div class="mb-8">
+            <h4 class="font-semibold mb-3 uppercase tracking-wider text-sm">Material</h4>
+            <div class="flex space-x-4">
+              <button class="px-6 py-2 border-2 border-luxury-black dark:border-white font-medium rounded">18k Gold</button>
+              <button class="px-6 py-2 border border-luxury-gray text-luxury-gray rounded hover:border-luxury-black dark:hover:border-white transition-colors">Silver</button>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-12">
+            <div class="flex items-center border border-luxury-black dark:border-white rounded h-14 w-32">
+              <button onclick="updateQty(-1)" class="w-1/3 h-full flex items-center justify-center hover:bg-luxury-beige dark:hover:bg-luxury-darkGray transition-colors">-</button>
+              <span id="qty-input" class="w-1/3 h-full flex items-center justify-center font-bold">1</span>
+              <button onclick="updateQty(1)" class="w-1/3 h-full flex items-center justify-center hover:bg-luxury-beige dark:hover:bg-luxury-darkGray transition-colors">+</button>
+            </div>
+            <button onclick="addCurrentToCart()" class="flex-grow btn-primary h-14 uppercase tracking-wider font-semibold text-lg flex items-center justify-center space-x-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+              <span>Add to Cart</span>
+            </button>
+          </div>
+          
+          <!-- Product Accordions -->
+          <div class="border-t border-luxury-gray/30 pt-6">
+            <h4 class="font-bold flex justify-between items-center cursor-pointer mb-2">Details <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></h4>
+            <p class="text-sm text-luxury-gray mb-4">Crafted from premium materials ensuring longevity and brilliance. Avoid contact with water and perfume.</p>
+            
+            <h4 class="font-bold flex justify-between items-center cursor-pointer mb-2 border-t border-luxury-gray/30 pt-4">Shipping & Returns <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg></h4>
+          </div>
+        </div>
+      `;
+
+      let qty = 1;
+      
+      window.updateQty = (change) => {
+        qty = Math.max(1, qty + change);
+        document.getElementById('qty-input').textContent = qty;
+      };
+      
+      window.addCurrentToCart = () => {
+        addToCart(product.id, qty);
+        // Provide visual feedback
+        const btn = document.querySelector('.btn-primary span');
+        const orig = btn.textContent;
+        btn.textContent = 'Added!';
+        setTimeout(() => btn.textContent = orig, 2000);
+      };
+
+      window.toggleWishlistItem = (id) => {
+        toggleWishlist(id);
+        location.reload(); // Quick refresh for state
+      };
+    });
+  </script>
+</body>
+</html>

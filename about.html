@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us | Luna Accessories</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            luxury: {
+              beige: "#F5F5DC",
+              gold: "#D4AF37",
+              black: "#121212",
+              white: "#FFFFFF",
+              gray: "#E5E7EB",
+              darkGray: "#374151"
+            }
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            serif: ["Playfair Display", "serif"],
+            arabic: ["Cairo", "sans-serif"]
+          },
+          boxShadow: {
+            "luxury": "0 4px 20px rgba(0, 0, 0, 0.05)",
+          }
+        }
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer base {
+      body { @apply font-sans bg-luxury-white text-luxury-black transition-colors duration-300; }
+      .dark body { @apply bg-luxury-black text-luxury-white; }
+    }
+    @layer components {
+      .btn-primary { @apply bg-luxury-black text-luxury-white px-6 py-3 rounded hover:bg-luxury-darkGray transition-colors; }
+      .dark .btn-primary { @apply bg-luxury-white text-luxury-black hover:bg-luxury-gray; }
+      .btn-outline { @apply border border-luxury-black text-luxury-black px-6 py-3 rounded hover:bg-luxury-black hover:text-luxury-white transition-colors; }
+      .dark .btn-outline { @apply border-luxury-white text-luxury-white hover:bg-luxury-white hover:text-luxury-black; }
+    }
+  </style>
+  <link rel="stylesheet" href="./src/style.css">
+</head>
+<body class="font-sans antialiased text-luxury-black bg-luxury-white dark:bg-luxury-black dark:text-luxury-white transition-colors duration-300">
+  
+  <div id="app-header"></div>
+
+  <!-- Page Header -->
+  <div class="pt-32 pb-16 px-4 bg-luxury-beige dark:bg-luxury-darkGray transition-colors">
+    <div class="max-w-7xl mx-auto text-center">
+      <h1 class="font-serif text-4xl md:text-5xl font-bold mb-4 uppercase tracking-widest text-luxury-black dark:text-luxury-gold">About Luna</h1>
+      <p class="text-luxury-gray dark:text-luxury-gray uppercase tracking-widest text-sm">Crafting Elegance, Defining Luxury</p>
+    </div>
+  </div>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+      <!-- Image Section -->
+      <div class="relative h-[600px] rounded-xl overflow-hidden shadow-2xl">
+        <img src="https://ynn787qihi.ufs.sh/f/Qj6TSP5Fj9mq8IdolNs0GbPji7192ACswTmfQ8uU6FyIahJW" alt="Luna Elegance" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-black/10"></div>
+      </div>
+
+      <!-- Content Section -->
+      <div class="space-y-12">
+        
+        <!-- English Section -->
+        <div class="space-y-8">
+          <div class="pl-6 border-l-4 border-luxury-gold">
+            <p class="font-serif text-xl md:text-2xl italic text-luxury-black dark:text-white leading-relaxed">
+              "At Luna Accessories, we believe that true elegance lies in the details. Every piece is crafted to celebrate your unique story and elevate your everyday style."
+            </p>
+          </div>
+          
+          <p class="text-luxury-darkGray dark:text-luxury-gray leading-relaxed text-lg">
+            Where modern minimalism meets timeless luxury. Luna Accessories is dedicated to empowering the modern woman with statement pieces that shine as brightly as she does.
+          </p>
+          
+          <p class="text-luxury-darkGray dark:text-luxury-gray leading-relaxed text-lg">
+            Designed for the woman who defines her own elegance. Discover curated collections crafted to bring a touch of luxury to your everyday moments.
+          </p>
+        </div>
+
+        <!-- Divider -->
+        <div class="flex items-center justify-center space-x-4 py-4">
+          <div class="h-px bg-luxury-gray flex-grow"></div>
+          <svg class="w-6 h-6 text-luxury-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+          <div class="h-px bg-luxury-gray flex-grow"></div>
+        </div>
+
+        <!-- Arabic Section -->
+        <div class="space-y-8 text-right font-arabic" dir="rtl">
+          <div class="pr-6 border-r-4 border-luxury-gold">
+            <p class="font-serif text-xl md:text-2xl text-luxury-black dark:text-white leading-relaxed font-bold">
+              "في Luna Accessories، نؤمن بأن الإكسسوارات ليست مجرد تفاصيل إضافية، بل هي اللمسة السحرية التي تحكي قصتك وتعكس أناقتك الفريدة في كل لحظة."
+            </p>
+          </div>
+          
+          <p class="text-luxury-darkGray dark:text-luxury-gray leading-relaxed text-lg">
+            نصنع الفخامة لنُلهم حضورك؛ كل قطعة في Luna Accessories مصممة خصيصاً لتناسب المرأة العصرية التي تقرّب الجمال من تفاصيلها اليومية.
+          </p>
+          
+          <p class="text-luxury-darkGray dark:text-luxury-gray leading-relaxed text-lg">
+            حيث يلتقي التصميم الراقي بالبساطة الساحرة. نقدم لكِ في Luna Accessories تشكيلة مختارة بعناية لتكون مرآة لذوقك الرفيع وتفردك.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <div id="app-footer"></div>
+
+  <script type="module" src="./src/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.setupSharedUI();
+    });
+  </script>
+</body>
+</html>
